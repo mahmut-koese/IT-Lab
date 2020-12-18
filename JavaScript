@@ -1,0 +1,371 @@
+window.addEventListener("load", function() {
+    game.setup(); //ruft setup Funktion beim Laden auf 
+   
+    document.getElementById("reset").addEventListener("click", function() {
+     game.reset(); });
+
+
+document.getElementById("check").addEventListener("click", function() {
+    let win = game.checkForWin();
+ 
+    const resultField = document.getElementById("result");
+
+    if(win){
+        resultField.innerText = "You win";
+        resultField.style.backgroundColor = "rgb(0, 255, 0)";
+    }
+    else{
+        resultField.innerText = "You lose";
+        resultField.style.backgroundColor = "rgb(255, 0, 0)";
+    }
+});
+});
+
+
+const game = 
+{
+    board: [],
+    gameBoard: [],
+    fieldSize: 8,
+    numAtoms: 8, // Anzahl Atome
+
+    setup()
+    {
+        this.randomBoardSize(5, 7);
+        this.board = this.setBoard();
+        this.gameBoard = this.setBoard();
+        this.addGameField(); // Felder werden in Spielfeld hinzugefügt
+        this.sizeFields();
+        this.addGreenFields();
+        this.placeAtoms(1, 2);
+        function newGame(gameId, width, height){
+          axios
+            .post(
+              "https://www2.hs-esslingen.de/~melcher/atoms/?request=newgame&difficulty=easy",
+              {
+                response: "newgame",
+                gameId: "gameId",
+                width: "width",
+                height: "height"
+              }
+            )
+            .then((res) => showOutput(res))
+            .catch((err) => console.error(err));
+        }
+
+        axios
+          .get("https://www2.hs-esslingen.de/~melcher/atoms/?request=newgame&difficulty=easy")
+          .then((res) => {
+            console.log(res);
+          });
+         
+        axios
+          .get("https://www2.hs-esslingen.de/~melcher/atoms/?request=shoot&gameid=#&side=top&position=1")
+          .then((responseData) => {
+            console.log(responseData);
+          }); 
+
+        axios
+          .get("https://www2.hs-esslingen.de/~melcher/atoms/?request=solve&gameid=#&atoms=[[1,1],[2,2]]")
+          .then((responseData) => {
+            console.log(responseData);
+          });  
+        
+    },
+
+    reset(){
+        const field = document.getElementsByClassName("field");
+        const resultField = document.getElementById("result");
+        const fieldLength = field.length
+        for(let i = 0; i < fieldLength; i++){
+            field[0].remove();
+        }
+        resultField.innerText = "";
+        resultField.style.backgroundColor = "rgb(255, 255, 255)";
+        this.setup();
+    },
+    randomBoardSize(min, max){
+        this.fieldSize = Math.floor(Math.random() * (max+1 - min) + min) + 2;
+    },
+
+    addGameField(){
+        const divBoard = document.querySelector("#board");
+        
+        for (let y = 0; y < this.fieldSize; y++)
+        {
+            for (let x = 0; x < this.fieldSize; x++)
+            {
+                let field = document.createElement("div"); // neues Feld erzeugt
+
+                field.classList.add("field"); // field ist ein Kasten
+                field.setAttribute("data-x", x);
+                field.setAttribute("data-y", y);
+
+                field.addEventListener("click", event => this.clicked(event));
+                divBoard.appendChild(field);
+                this.gameBoard[x][y] = field; // Felder werden zum Gameboard hinzugefügt, an passender Stelle
+            }
+        }
+    },
+
+    addGreenFields()
+    {
+        for (let y = 0; y < this.fieldSize; y++)
+        {
+            for (let x = 0; x < this.fieldSize; x++)
+            {
+                if (x == y || (x === 0 && y === this.fieldSize-1) || (y === 0 && x === this.fieldSize-1)) // Felder bleiben Grau
+                {
+                    continue;
+                }
+                if (y == 0 || x == 0 || y == this.fieldSize-1 ||  x == this.fieldSize-1) // Ränder werden auf grün gesetzt
+                {
+                    this.board[x][y] = "borderField";                                    // siehe css -> .borderField 
+                    this.gameBoard[x][y].classList.add("borderField");
+                }
+            }
+        }
+    },
+
+    setBoard() {
+        const board = [];
+        for(let y = 0; y < this.fieldSize; y++){
+
+            board.push([]);
+            for(let x = 0; x < this.fieldSize; x++)
+            {
+                board[y].push("null");
+            }
+        }
+        return board;
+    },
+
+    sizeFields(){
+        const field = document.getElementsByClassName("field");
+        const sizeProzent = 100 / this.fieldSize; // genaue Größe der Felder berechnet auf anzahl der Kasetchen
+        for (let i = 0; i < field.length; i++)
+        {
+            field[i].style.width = sizeProzent + "%"; // für jedes Feld width und height setzen, anhand von sizeProzent
+            field[i].style.height = sizeProzent + "%";
+        }
+    },
+
+    
+    placeAtoms(min, max)
+    {
+        this.numAtoms = Math.floor(Math.random() * (max+1 - min) + min) + 2;
+
+        for (let i = 0; i < this.numAtoms ; i++)
+        {
+            x  = Math.floor(Math.random() * (this.fieldSize - 4) + 2) // darf nicht bei 0 platziert werden
+            y  = Math.floor(Math.random() * (this.fieldSize - 4) + 2)
+            if(this.board[x][y] == "atom"){
+                continue;
+            }
+            this.board[x][y] = "atom";          //atom einfügen
+            this.gameBoard[x][y].classList.add("atom");
+        }
+    },
+
+
+    setField(x, y, val){
+        this.board[x][y] = val;
+        this.gameBoard[x][y].classList.add(val);
+    },
+    clicked(event)
+    {
+        const clickedField = event.target;                         // hole geklicktes Feld
+        const x = parseInt(clickedField.getAttribute("data-x"));
+        const y = parseInt(clickedField.getAttribute("data-y")); 
+
+        if(clickedField.classList.contains("borderField"))
+        {
+            this.clearBorderField();
+
+            if(x == 0) {
+                this.setField(x, y, "rightArrow");
+                this.calculateTrajectory(x, y, "right");
+                this.gameBoard[x][y].classList.add("rightArrow");
+
+            }
+            else if(y == 0){
+                this.setField(x, y, "downArrow");
+                this.calculateTrajectory(x, y, "down");
+                this.gameBoard[x][y].classList.add("downArrow");
+
+            }
+            else if(x == this.fieldSize-1){
+                this.setField(x, y, "leftArrow");
+                this.calculateTrajectory(x, y, "left");
+                this.gameBoard[x][y].classList.add("leftArrow");
+
+            }
+            else if(y == this.fieldSize-1){
+                this.setField(x, y, "upArrow");
+                this.calculateTrajectory(x, y, "up");
+                this.gameBoard[x][y].classList.add("upArrow");
+
+            }
+        }
+        else if(clickedField.classList.contains("suspectAtom"))
+        {
+            clickedField.classList.remove("suspectAtom");  // wenn susppectedAtom gedrückt wurde, dann remove 
+        }
+        else if (x > 1 && y > 1 && x < this.fieldSize-2 && y < this.fieldSize-2)
+        {
+            this.board[x][y] = "suspectAtom";
+            this.gameBoard[x][y].classList.add("suspectAtom");
+        }
+    },
+
+    clearBorderField(){
+        let border = document.getElementsByClassName("field borderField");
+        const borderLength = border.length;
+        for(let i = 0; i < borderLength; i++){
+            border[i].className = "field borderField";
+        }
+    },
+
+    checkForWin(){
+        let winner = true;
+        for(let i = 0; i < this.fieldSize; i++){
+            for(let j = 0; j < this.fieldSize; j++){
+                if(this.gameBoard[j][i].classList.contains("atom")){
+                    if(this.gameBoard[j][i].classList.contains("suspectAtom")){
+                        this.setField(j, i, "correct");
+                    }
+                    else{
+                        this.setField(j, i, "wrong");
+                        winner = false
+                    }    
+                }
+                else if(this.gameBoard[j][i].classList.contains("suspectAtom")){
+                    if(!this.gameBoard[j][i].classList.contains("atom")){
+                        this.setField(j, i, "wrong");
+                        winner = false
+                    }
+                }
+            }
+        }
+        return winner;
+    },
+    calculateTrajectory(x, y, direction){
+        const originalX = x;
+        const originalY = y;
+        const originalDirection = direction;
+        do {
+            let nearbyAtoms = [];
+
+            nearbyAtoms = this.checkForAtoms(x, y);
+            direction = this.calculateDirection(x, y, nearbyAtoms, direction)
+            //console.log(nearbyAtoms, direction, x, y);
+
+            switch(direction){
+                case "right":
+                    x++;
+                    break;
+                case "left":
+                    x--;
+                    break;
+                case "up":
+                    y--;
+                    break;
+                case "down":
+                    y++;
+                    break;
+            }
+
+        }while(!(x == 0 || y == 0 || x == this.fieldSize - 1 || y == this.fieldSize - 1))
+
+        this.setCorrectExitImage(originalX, originalY, x, y, originalDirection, direction);
+    },
+
+    checkForAtoms(x, y){
+        let nearbyAtoms = [];
+        let minY = y - 1;
+        let maxY = y + 1;
+        let minX = x - 1;
+        let maxX = x + 1;
+
+        minY = minY < 0 ? 0 : minY;
+        maxY = maxY > this.fieldSize-1 ? this.fieldSize-1 : maxY;
+        minX = minX < 0 ? 0 : minX;
+        maxX = maxX > this.fieldSize-1 ? this.fieldSize-1 : maxX;
+
+        //console.log(y, minY, maxY, "  ", x, minX, maxX);
+        for(let i = minY; i <= maxY; i++){
+            for(let j = minX; j <= maxX; j++){
+                if(this.gameBoard[j][i].classList.contains("atom")){
+                    nearbyAtoms.push([j, i]);
+                }
+            }
+        }
+        return nearbyAtoms;
+    },
+
+    calculateDirection(x, y, nearbyAtoms, direction){
+        console.log(x, y, nearbyAtoms, direction)
+        if(nearbyAtoms.length == 0){
+            return direction;
+        }
+
+        const nearbyAtomX = nearbyAtoms[0][0];
+        const nearbyAtomY = nearbyAtoms[0][1];
+
+        if(nearbyAtoms.length >= 2){
+            return this.reverseDirection(direction)
+        }
+        else{
+            //console.log(nearbyAtomX, nearbyAtomY);
+            if(direction == "right" || direction == "left"){
+                if(nearbyAtomY == y){
+                    return this.reverseDirection(direction);
+                }
+                else if(nearbyAtomY > y){
+                    return "up";
+                }
+                else if(nearbyAtomY < y){
+                    return "down";
+                }
+            }
+            else{
+                if(nearbyAtomX == x){
+                    return this.reverseDirection(direction);
+                }
+                else if(nearbyAtomX > x){
+                    return "left";
+                }
+                else if(nearbyAtomX < x){
+                    return "right";
+                }
+            }
+            return direction
+        }
+    },
+
+    reverseDirection(direction){
+        switch(direction){
+            case "right":
+                return "left";
+            case "left":
+                return "right";
+            case "up":
+                return "down";
+            case "down":
+                return "up";
+        }
+    },
+
+    setCorrectExitImage(originalX, originalY, x, y, originalDirection, direction){
+        if(originalX == x && originalY == y){
+            if(originalDirection == "left" || originalDirection == "right"){
+                this.setField(x, y, "horizontalArrows");
+            }
+            else{
+                this.setField(x, y, "verticalArrows");
+            }
+        }
+        this.setField(x, y, direction + "Arrow");
+
+    }
+}
