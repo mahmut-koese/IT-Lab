@@ -1,0 +1,612 @@
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+.nav_forschung1{
+    float: left;
+    background-color: gray;
+    display: inline-flex;
+    width: 600px;
+}
+.nav_forschung{
+    float: left;
+    background-color: gray;
+    display: inline-flex;
+    width: 600px;
+}
+
+
+.SHFIN{
+    position: relative;
+    left:30em;
+    word-spacing: 2em;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+
+.main-nav-item1{
+    position: relative;
+    left:25%;
+    top:1em;
+    font-size: 20px;
+}
+.main-nav-item2{
+    position: relative;
+    left:44%;
+    top: -2px;
+    font-size: 20px;
+}
+.main-nav-item3{
+    position: relative;
+    left:55%;
+    top:-25px;
+    font-size: 20px;
+}
+.main-nav-item4{
+    position: relative;
+    left:65%;
+    top:-47px;
+    font-size: 20px;
+}
+.main-nav-item5{
+    position: relative;
+    left:76%;
+    top:-70px;
+    font-size: 20px;
+}
+.border{
+    position: relative;
+    background-color: black;
+    height: 0px;
+    top: 35px;
+    border-top: 2px black solid;
+    box-shadow: 10px 8px 11px #888888;
+    
+   
+    
+}
+
+.DE_EN_AA_Container{
+    background-color: #2f437a;
+    width: 50%;
+    height: 35px;
+    float: left;
+    position: relative;
+    
+}
+
+.DE{
+    position: relative;
+    color: white;
+    top: -23px;
+    left: 3em;
+}
+
+.EN{
+    position: relative;
+    color: white;
+    top: -41px;
+    left: 5em;
+}
+h6::first-letter{
+    font-size: small;
+}
+
+.AA{
+    
+    position: relative;
+    color: white;
+    top: -59px;
+    left: 6%;
+}
+
+
+.L_P_K{
+    background-color: #2f437a;
+    color: white;
+    width: 50%;
+    height: 35px;
+    float: left;
+    text-align: center;   
+}
+
+.nav{
+    color: black;
+    display: inline-block;
+}
+
+.HSE_Container{
+width: 10%;
+height: 1px;
+float: left;
+}
+
+.studium{
+position: relative;
+float: left;
+margin-top: 1em;
+font-size: 20px;
+height: 40px;
+text-align: right;
+width: 10%;
+left: 390px;
+}
+
+.a_footage{
+    color: white;
+    
+}
+
+.HSE{
+    height: 85px;
+    margin-top: -1em;
+    margin-left: 90%;
+    float: center;
+    
+}
+
+.background{
+    background-color: #dedede;
+    position: relative;
+    left: 15%;
+    top:10%;
+    width: 1250px;
+}
+
+#me{
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    position: relative;
+    top: 20px;
+    left: 25px
+    
+}
+
+.linkedin{
+    height: 25px;
+}
+
+.instagram{
+    height: 25px;
+}
+
+.youtube{
+    height: 25px;
+}
+
+.mail_bild{
+    position: relative;
+    height: 25px;
+    text-decoration: none;
+    
+}
+a{
+    text-decoration: none;
+    color: black;
+    
+}
+a:hover{
+background-color: #f7f7f7;
+color: #b6163d;
+}
+
+
+.anschrift{
+    font-size: 20px;
+    
+}
+
+.a1{
+    color: #337ab7; 
+    text-decoration: none; 
+}
+
+.as{
+    color: white;
+}
+
+.Standorte{
+    top:-160px;
+    text-align: center;
+    font-size: 27px;
+    background-color: #B4D3Ed;
+    position: relative;
+    height: 450px;
+}
+
+.Standorte_schrift{
+    position: relative;
+    bottom: 580px;
+    left: 835px;
+    font-size: 25px;
+}
+.Campus_Stadtmitte{
+position: relative;
+height: 400px;
+top: -580px;
+width: 35%;
+}
+
+.Campus_Flandernstrasse{
+position: relative;
+height: 450px;
+height: 400px;
+top: -990px;
+width: 35%;
+left: 627px;
+}
+
+.Campus_Göppingen{
+position: relative;
+height: 450px;
+height: 400px;
+top: -1390px;
+width: 35%;
+left: 1250px;
+}
+
+.bild_position{
+position: relative;
+top: 25px;
+left:250px;
+}
+
+.campus_text_stadtmitte{
+    position: relative;
+    top: -1665px;
+    left: 185px;
+    font-size: 20px;
+    
+}
+
+.campus_text_flandernstrasse{
+    position: relative;
+    top: -1900px;
+    left: 790px;
+    font-size: 20px;
+    
+}
+
+.wholeBot{
+    position: relative;
+    top:20%;
+}
+
+.picture_text{
+    position: relative;
+    top: -150px;
+    left: 300px;
+    height: 50%;
+    width: 49%;
+    font-size: 27px;
+    font-family: sans-serif;}
+
+.campus_text_goeppingen{
+    position: relative;
+    top: -2140px;
+    left: 1450px;
+    font-size: 20px;
+    
+}
+.bottom{
+    margin-top: 150px;
+}
+
+.h1{
+    position: relative; ;
+    text-align: right;
+}
+
+.footage{
+    background-color: black;
+    position: relative;
+    color: white;
+    height: 40px;
+    bottom:2085px;
+}
+
+.footage_schrift{
+    color:white;
+    position: relative;
+    bottom:-10px;
+    word-spacing: 300px;
+    text-align: center;
+}
+
+
+nav > ul > li{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 20px 20px;
+    margin:10px;
+}
+
+nav > ul > li:hover{
+    color: black;
+    background-color: #f7f7f7fb;
+   
+    
+}
+
+
+
+nav > ul > li > ul{
+    display: none;
+    left:-200px;
+    list-style-type: none;
+    margin-top: 1em;
+    float: left;
+    
+    
+}
+
+nav > ul > li > ul:hover{
+    display: inline-block;
+    
+   
+}
+
+nav > ul > li:hover > ul{
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    
+}
+
+
+
+.hs1{
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    float:left;
+    white-space: pre-wrap;
+    background-color: #f7f7f7fb; 
+    padding-top: 10%;
+    padding-left: 2%;
+}
+
+.hs2{
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    float:left;
+    white-space: pre-wrap;
+    background-color: #f7f7f7fb;
+    justify-content: space-evenly;
+    padding-top: 10%;
+    padding-left: 2%;
+}
+
+.hs3{
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    float:left;
+    white-space: pre-wrap;
+    background-color: #f7f7f7fb;
+    padding-top: 10%;
+    padding-left: 2%;
+}
+.hs4{
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    float:left;
+    white-space: pre-wrap;
+    background-color: #f7f7f7fb;
+    padding-top: 10%;
+    padding-left: 2%;
+}
+.hs5{
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    float:left;
+    white-space: pre-wrap;
+    background-color: #f7f7f7fb;
+    padding-top: 10%;
+    padding-left: 2%;
+}
+
+.SuS{
+    width: 1000px;
+    float: left;
+}
+
+.nwt{
+    float: left;
+    width: 40%;
+}
+
+
+.forschung{
+    width: 100%
+    
+}
+
+nav>ul>li>ul>li>ul>li{
+    background-color: #f7f7f7fb;
+    float: left;
+    position: relative;
+    list-style-type: none ;
+    left:-2em;
+    font-size: 20px;
+}
+
+nav>ul>li>ul>li>ul>li:hover{
+background-color: white;
+
+}
+
+.nav{
+    position: relative;
+    left:30em;
+    z-index: 10;
+    
+}
+
+#board {
+    margin: 0;
+    width: 500px;
+    height: 500px;
+    border: solid 1px #333;
+    margin-left: 35%;
+  }
+  
+  #board .row {
+    margin: 0;
+  }
+  
+  .square {
+    height: 32px;
+    width: 32px;
+    background: #aa4f4f;
+    float: left;
+  }
+  
+  .square.white {
+    background: #fff;
+  }
+  
+  .square.black {
+    background: #333;
+  }
+
+  
+#result{
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0em;
+    
+    
+}
+
+
+#gameButtons > button{
+    font-size: 20px;
+    font-weight: bold;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+    
+}
+
+.spielÜberschrift{
+    font-size: 60px;
+    margin-top: 6%;
+    margin-left: 39%;
+}
+#buttons{
+    margin-left: 45%;
+    font-size: 30px;
+    transition: all ease-in-out;
+}
+
+
+#reset{
+    border: 1px black solid;
+}
+
+#reset:hover{
+    background-color: greenyellow;
+}
+
+#check{
+    border: 1px black solid;
+    margin: 1%;
+}
+
+#check:hover{
+    background-color: greenyellow;
+}
+
+
+#game > #board {
+    width: 600px;
+    height:600px;
+    margin: auto;
+    background:rgb(236, 236, 236);
+}
+
+.field {
+    box-sizing: border-box;
+    border: 1px solid black;
+    width: 14.28%;
+    height: 14.28%;
+    float:left;
+    text-align: center;
+    background-image: url("images/symbols.svg");
+    background-size: 1800%;
+    background-color: white;
+}
+
+.borderField {
+    background-color: greenyellow;
+}
+.atom {
+    background-position: 0%;
+}
+
+.suspectAtom{
+    background-position: -100%;
+}
+
+.rightArrow {
+    background-position: -200%;
+}
+
+.upArrow {
+    background-position: -300%;
+}
+
+.leftArrow {
+    background-position: -400%;
+}
+
+.downArrow {
+    background-position: -500%;
+}
+
+.horizontalArrows {
+    background-position: -600%;
+}
+
+.verticalArrows {
+    background-position: -700%;  
+}
+
+.correct{
+    background-color: rgb(0, 255, 0);
+}
+
+.wrong{
+    background-color: red;
+}
